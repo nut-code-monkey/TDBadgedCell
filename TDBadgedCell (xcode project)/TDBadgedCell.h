@@ -23,7 +23,7 @@
 @property (nonatomic, strong) UIColor *badgeColor;
 @property (nonatomic, strong) UIColor *badgeTextColor;
 @property (nonatomic, strong) UIColor *badgeColorHighlighted;
-@property (nonatomic, assign, getter = isshowShadow) BOOL showShadow;
+@property (nonatomic, assign, getter = isShowShadow) BOOL showShadow;
 @property (nonatomic, assign, getter = isBoldFont) BOOL boldFont;
 @property (nonatomic, assign)    CGFloat fontSize;
 @property (nonatomic, assign)    CGFloat radius;
@@ -33,7 +33,7 @@
 @interface TDBadgedCell : UITableViewCell
 
 @property (nonatomic, strong) NSString *badgeString;
-@property (readonly,  strong) TDBadgeView *badge;
+@property (readonly, nonatomic, strong) TDBadgeView *badge;
 @property (nonatomic, strong) UIColor *badgeColor;
 @property (nonatomic, strong) UIColor *badgeTextColor;
 @property (nonatomic, strong) UIColor *badgeColorHighlighted;

@@ -108,7 +108,7 @@
 	[outputImage drawInRect:rect];
     
     // Set any additional styles for select states
-	if((self.parent.selectionStyle != UITableViewCellSelectionStyleNone) && (self.parent.highlighted || self.parent.selected) && self.showShadow)
+	if((self.parent.selectionStyle != UITableViewCellSelectionStyleNone) && (self.parent.highlighted || self.parent.selected) && self.isShowShadow)
 	{
 		[[self layer] setCornerRadius:radius];
 		[[self layer] setShadowOffset:CGSizeMake(0, 1)];
@@ -126,10 +126,13 @@
 
 @end
 
+@interface TDBadgedCell ()
+
+@property (nonatomic,  strong) TDBadgeView *badge;
+
+@end
 
 @implementation TDBadgedCell
-
-@synthesize badgeString=__badgeString, badge=__badge, badgeColor, badgeTextColor, badgeColorHighlighted, showShadow, badgeLeftOffset, badgeRightOffset, resizeableLabels;
 
 #pragma mark - Init methods
 
@@ -154,8 +157,8 @@
 - (void)configureSelf
 {
 	// Initialization code
-    if(!__badge)
-        __badge = [[TDBadgeView alloc] initWithFrame:CGRectZero];
+    if(!self.badge)
+        self.badge = [[TDBadgeView alloc] initWithFrame:CGRectZero];
     
 	self.badge.parent = self;
     
@@ -174,13 +177,9 @@
 
 - (void) setBadgeString:(NSString *)badgeString
 {
-    __badgeString = badgeString;
-#if __has_feature(objc_arc)
-    __badge.badgeString = [__badgeString copy];
-#else
-    __badge.badgeString = [[__badgeString copy] autorelease];
-#endif
-    [__badge setNeedsDisplay];
+    self.badgeString = badgeString;
+    self.badge.badgeString = [self.badgeString copy];
+    [self.badge setNeedsDisplay];
     [self layoutSubviews];
 }
 
@@ -213,7 +212,7 @@
 									   badgeSize.width + 13, badgeSize.height + (50/badgeSize.height));
 		
         // Enable shadows if we want them
-		if(self.showShadow)
+		if(self.isShowShadow)
 			[self.badge setShowShadow:YES];
 		else
 			[self.badge setShowShadow:NO];
@@ -260,7 +259,7 @@
 	[super setHighlighted:highlighted animated:animated];
 	[self.badge setNeedsDisplay];
 	
-	if(self.showShadow)
+	if(self.isShowShadow)
 	{
 		[[[self textLabel] layer] setShadowOffset:CGSizeMake(0, 1)];
 		[[[self textLabel] layer] setShadowRadius:1];
