@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 
 int main(int argc, char *argv[]) {
+    int retVal;
     
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int retVal = UIApplicationMain(argc, argv, nil, @"TDBadgedTableCellAppDelegate");
-    [pool release];
+    @autoreleasepool {
+            retVal = UIApplicationMain(argc, argv, nil, @"TDBadgedTableCellAppDelegate");
+    }
+
     return retVal;
 }

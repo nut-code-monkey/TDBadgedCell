@@ -15,53 +15,31 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
-#ifndef TD_STRONG
-#if __has_feature(objc_arc)
-    #define TD_STRONG strong
-#else
-    #define TD_STRONG retain
-#endif
-#endif
-
-#ifndef TD_WEAK
-#if __has_feature(objc_arc_weak)
-    #define TD_WEAK weak
-#elif __has_feature(objc_arc)
-    #define TD_WEAK unsafe_unretained
-#else
-    #define TD_WEAK assign
-#endif
-#endif
-
 @interface TDBadgeView : UIView
-{
-}
 
-@property (nonatomic, readonly)     NSUInteger width;
-@property (nonatomic, TD_STRONG)    NSString *badgeString;
-@property (nonatomic, TD_WEAK)      UITableViewCell *parent;
-@property (nonatomic, TD_STRONG)    UIColor *badgeColor;
-@property (nonatomic, TD_STRONG)    UIColor *badgeTextColor;
-@property (nonatomic, TD_STRONG)    UIColor *badgeColorHighlighted;
-@property (nonatomic, assign)       BOOL showShadow;
-@property (nonatomic, assign)       BOOL boldFont;
-@property (nonatomic, assign)       CGFloat fontSize;
-@property (nonatomic, assign)       CGFloat radius;
+@property (nonatomic, readonly) NSUInteger width;
+@property (nonatomic, strong) NSString *badgeString;
+@property (nonatomic, weak) UITableViewCell *parent;
+@property (nonatomic, strong) UIColor *badgeColor;
+@property (nonatomic, strong) UIColor *badgeTextColor;
+@property (nonatomic, strong) UIColor *badgeColorHighlighted;
+@property (nonatomic, assign, getter = isshowShadow) BOOL showShadow;
+@property (nonatomic, assign, getter = isBoldFont) BOOL boldFont;
+@property (nonatomic, assign)    CGFloat fontSize;
+@property (nonatomic, assign)    CGFloat radius;
 
 @end
 
-@interface TDBadgedCell : UITableViewCell {
+@interface TDBadgedCell : UITableViewCell
 
-}
-
-@property (nonatomic, TD_STRONG)    NSString *badgeString;
-@property (readonly,  TD_STRONG)    TDBadgeView *badge;
-@property (nonatomic, TD_STRONG)    UIColor *badgeColor;
-@property (nonatomic, TD_STRONG)    UIColor *badgeTextColor;
-@property (nonatomic, TD_STRONG)    UIColor *badgeColorHighlighted;
-@property (nonatomic, assign)       BOOL showShadow;
-@property (nonatomic, assign)       CGFloat badgeLeftOffset;
-@property (nonatomic, assign)       CGFloat badgeRightOffset;
-@property (nonatomic, TD_STRONG)    NSMutableArray *resizeableLabels;
+@property (nonatomic, strong) NSString *badgeString;
+@property (readonly,  strong) TDBadgeView *badge;
+@property (nonatomic, strong) UIColor *badgeColor;
+@property (nonatomic, strong) UIColor *badgeTextColor;
+@property (nonatomic, strong) UIColor *badgeColorHighlighted;
+@property (nonatomic, assign, getter = isShowShadow)    BOOL showShadow;
+@property (nonatomic, assign) CGFloat badgeLeftOffset;
+@property (nonatomic, assign) CGFloat badgeRightOffset;
+@property (nonatomic, strong) NSMutableArray *resizeableLabels;
 
 @end

@@ -22,8 +22,6 @@
 
 @implementation TDBadgeView
 
-@synthesize width=__width, badgeString=__badgeString, parent=__parent, badgeColor=__badgeColor, badgeTextColor=__badgeTextColor, badgeColorHighlighted=__badgeColorHighlighted, showShadow=__showShadow, boldFont=__boldFont, radius=__radius;
-
 - (id) initWithFrame:(CGRect)frame
 {
 	if ((self = [super initWithFrame:frame]))
@@ -51,18 +49,18 @@
 #else
 	CGSize numberSize = [self.badgeString sizeWithFont:font];
 #endif
-    CGFloat radius = (__radius)?__radius:4.0;
+    CGFloat radius = (self.radius)?self.radius:4.0;
 	
     // Set the badge background colours
 	UIColor *colour;
-	if((__parent.selectionStyle != UITableViewCellSelectionStyleNone) && (__parent.highlighted || __parent.selected))
-		if (__badgeColorHighlighted)
-			colour = __badgeColorHighlighted;
+	if((self.parent.selectionStyle != UITableViewCellSelectionStyleNone) && (self.parent.highlighted || self.parent.selected))
+		if (self.badgeColorHighlighted)
+			colour = self.badgeColorHighlighted;
 		else
 			colour = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.000f];
         else
-            if (__badgeColor)
-                colour = __badgeColor;
+            if (self.badgeColor)
+                colour = self.badgeColor;
             else
                 colour = [UIColor colorWithRed:0.530f green:0.600f blue:0.738f alpha:1.000f];
 	
@@ -82,8 +80,8 @@
 	CGContextRestoreGState(context);
 	
     // Set the correct badge text colour, otherwise use kCGBlendModeClear to mask it
-	if (__badgeTextColor)
-		CGContextSetFillColorWithColor(context, __badgeTextColor.CGColor);
+	if (self.badgeTextColor)
+		CGContextSetFillColorWithColor(context, self.badgeTextColor.CGColor);
 	else
 		CGContextSetBlendMode(context, kCGBlendModeClear);
 	
@@ -99,7 +97,7 @@
     [__badgeString drawInRect:bounds withAttributes:@{ NSFontAttributeName:font,
                                                        NSParagraphStyleAttributeName:paragraph}];
 #else
-    [__badgeString drawInRect:bounds withFont:font lineBreakMode:TDLineBreakModeClip];
+    [self.badgeString drawInRect:bounds withFont:font lineBreakMode:TDLineBreakModeClip];
 #endif
 	
     // Create an image from the new badge (Fast and easy to cache)
@@ -109,9 +107,8 @@
     // Draw the image into the badgeView
 	[outputImage drawInRect:rect];
     
-    
     // Set any additional styles for select states
-	if((__parent.selectionStyle != UITableViewCellSelectionStyleNone) && (__parent.highlighted || __parent.selected) && __showShadow)
+	if((self.parent.selectionStyle != UITableViewCellSelectionStyleNone) && (self.parent.highlighted || self.parent.selected) && self.showShadow)
 	{
 		[[self layer] setCornerRadius:radius];
 		[[self layer] setShadowOffset:CGSizeMake(0, 1)];
@@ -125,22 +122,6 @@
 		[[self layer] setShadowRadius:0];
 		[[self layer] setShadowOpacity:0];
 	}
-	
-}
-
-- (void) dealloc
-{
-	__parent = nil;
-	
-#if !__has_feature(objc_arc)
-	
-	[__badgeString release];
-	[__badgeColor release];
-	[__badgeTextColor release];
-	[__badgeColorHighlighted release];
-	
-	[super dealloc];
-#endif
 }
 
 @end
@@ -314,20 +295,5 @@
 		[self setNeedsDisplay];
 	}
 }
-
-#if !__has_feature(objc_arc)
-- (void)dealloc
-{
-	[__badge release];
-	[badgeColor release];
-	[badgeTextColor release];
-	[__badgeString release];
-	[badgeColorHighlighted release];
-    [resizeableLabels release];
-	
-	[super dealloc];
-}
-#endif
-
 
 @end
