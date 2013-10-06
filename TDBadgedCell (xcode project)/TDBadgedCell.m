@@ -177,7 +177,7 @@
 
 - (void) setBadgeString:(NSString *)badgeString
 {
-    self.badgeString = badgeString;
+    _badgeString = badgeString;
     self.badge.badgeString = [self.badgeString copy];
     [self.badge setNeedsDisplay];
     [self layoutSubviews];
